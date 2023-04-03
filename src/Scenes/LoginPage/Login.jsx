@@ -22,13 +22,19 @@ export function Login(props) {
   const navigate = useNavigate();
   const login = async (values, onSubmitProps) => {
     setIsLoading(true);
-    const loginResponse = await fetch("http://localhost:3001/auth/login", {
+    const loginResponse = await fetch("http://192.168.43.171:3001/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
+    }).catch((x) => {
+      setError("Unable To Connect To Server");
+      setIsLoading(false);
     });
     const status = loginResponse.status;
-    console.log(status);
+    if (status == null) {
+      setError("unable to connect to server");
+    }
+
     if (status == 401) {
       setError("Invalid Credentials");
     }
@@ -98,7 +104,10 @@ export function Login(props) {
                 type="password"
                 name="password"
                 onBlur={handleBlur}
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  setError(null);
+                }}
                 value={values.password}
                 error={
                   (Boolean(touched.password) && Boolean(errors.password)) ||
@@ -109,7 +118,7 @@ export function Login(props) {
               <LoadingButton
                 sx={{ fontSize: "1rem" }}
                 type="submit"
-                variant="contained"
+                variant="outlined"
                 loading={isLoading}
               >
                 Signin

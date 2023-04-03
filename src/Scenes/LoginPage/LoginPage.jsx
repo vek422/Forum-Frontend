@@ -2,22 +2,26 @@ import { Box, Typography, IconButton, TextField, Button } from "@mui/material";
 import { useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode } from "../../states";
-import { DarkMode, LightMode, TextFields } from "@mui/icons-material";
+import { DarkMode, LightMode } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Login } from "./Login";
 import Signup from "./SignUp";
+import { useEffect } from "react";
 export default function LoginPage() {
   const [pageType, setPageType] = useState("login");
   const isMobile = useMediaQuery("(max-width:600px)");
   const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.user) != null ? true : false;
+  const navigate = useNavigate();
   const theme = useTheme();
-  const neutralLight = theme.palette.neutral.light;
-  const dark = theme.palette.neutral.dark;
-  const background = theme.palette.background.default;
-  const primaryLight = theme.palette.primary.light;
-  const alt = theme.palette.background.alt;
-  console.log(alt);
+  useEffect(() => {
+    if (isAuth) {
+      navigate("/home");
+    }
+  });
+
   return (
     <Box
       sx={{

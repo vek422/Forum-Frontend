@@ -243,7 +243,7 @@ export default function Signup(props) {
               <LoadingButton
                 loading={isLoading}
                 sx={{ fontSize: "1rem", gridColumn: "span 4" }}
-                variant="contained"
+                variant="outlined"
                 type="submit"
               >
                 Signin
