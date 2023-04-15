@@ -35,6 +35,7 @@ export default function Signup(props) {
     }
     formData.append("picturePath", values.picture.name);
     console.log(formData);
+
     const savedUserResponse = await fetch(
       "http://localhost:3001/auth/register",
       {
@@ -42,6 +43,7 @@ export default function Signup(props) {
         body: formData,
       },
     );
+
     if (savedUserResponse.status == 403) {
       setError("Email is already in use");
       setIsLoading(false);

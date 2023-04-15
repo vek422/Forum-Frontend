@@ -47,7 +47,7 @@ export default function SidePanel() {
             >
               <ListItemIcon>
                 <HomeTwoTone
-                  sx={{ fontSize: "1.4rem  ", color: theme.palette.Rosewater }}
+                  sx={{ fontSize: "1.4rem  ", color: theme.palette.Lavender }}
                 />
               </ListItemIcon>
               <ListItemText>
@@ -73,7 +73,7 @@ export default function SidePanel() {
             >
               <ListItemIcon>
                 <ChatTwoTone
-                  sx={{ fontSize: "1.4rem  ", color: theme.palette.Rosewater }}
+                  sx={{ fontSize: "1.4rem  ", color: theme.palette.Lavender }}
                 />
               </ListItemIcon>
               <ListItemText>
@@ -92,7 +92,7 @@ export default function SidePanel() {
             >
               <ListItemIcon>
                 <BookmarksTwoTone
-                  sx={{ fontSize: "1.4rem  ", color: theme.palette.Rosewater }}
+                  sx={{ fontSize: "1.4rem  ", color: theme.palette.Lavender }}
                 />
               </ListItemIcon>
               <ListItemText>

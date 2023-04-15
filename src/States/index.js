@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  mode: "dark",
+  mode: "light",
   user: null,
   token: null,
+  feedThreads: [],
 };
 
 export const authSlice = createSlice({
@@ -21,8 +22,12 @@ export const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
     },
+    setFeedThreads: (state, action) => {
+      state.feedThreads = state.feedThreads.concat(action.payload.threads);
+    },
   },
 });
 
-export const { setMode, setLogout, setLogin } = authSlice.actions;
+export const { setMode, setLogout, setLogin, setFeedThreads } =
+  authSlice.actions;
 export default authSlice.reducer;

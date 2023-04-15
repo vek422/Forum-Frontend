@@ -10,7 +10,6 @@ import { MenuOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setMode } from "../../states";
-import SideBar from "../Sidebar/Sidebar";
 import ProfileIcon from "./ProfileIcon";
 function Navbar() {
   const dispatch = useDispatch();
@@ -19,10 +18,8 @@ function Navbar() {
   const user = useSelector((state) => state.user);
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width:600px)");
-  const fullName = `${user.firstName} ${user.lastName}`;
   return (
     <>
-      <SideBar isOpen={isOpen} setIsOpen={setIsOpen} />
       <Box
         sx={{
           backgroundColor: theme.palette.background.alt,

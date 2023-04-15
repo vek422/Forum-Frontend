@@ -6,4 +6,15 @@ body,
   height: 100%;
   width: 100%;
   font-family: "Rubik", sans-serif;
+  overflow: hidden;
+}
+
+* {
+  scrollbar-face-color: rgb(210, 210, 210); /* Firefox 63 compatibility */
+  scrollbar-track-color: rgb(46, 54, 69); /* Firefox 63 compatibility */
+  scrollbar-color: rgb(210, 210, 210) rgb(46, 54, 69);
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  width: 0;
 }

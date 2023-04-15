@@ -126,7 +126,7 @@ export const themeSettings = (mode) => {
             // palette values for light mode
             primary: {
               dark: colorTokens.primary[700],
-              main: Latte.Sky,
+              main: Latte.Lavender,
               light: colorTokens.primary[50],
             },
             neutral: {

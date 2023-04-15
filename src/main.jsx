@@ -5,6 +5,7 @@ import "./index.css";
 import authReducer from "./states";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
+import { QueryClient, QueryClientProvider } from "react-query";
 import {
   persistStore,
   persistReducer,
@@ -29,13 +30,14 @@ const store = configureStore({
       },
     }),
 });
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistStore(store)}>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistStore(store)}>
+      <QueryClientProvider client={queryClient}>
         <App />
-      </PersistGate>
-    </Provider>
-  </React.StrictMode>,
+      </QueryClientProvider>
+    </PersistGate>
+  </Provider>,
 );

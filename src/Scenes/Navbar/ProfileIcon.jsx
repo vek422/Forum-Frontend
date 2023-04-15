@@ -16,7 +16,6 @@ export default function ProfileIcon(props) {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const isMobile = useMediaQuery("(max-width:600px");
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

@@ -22,7 +22,7 @@ export function Login(props) {
   const navigate = useNavigate();
   const login = async (values, onSubmitProps) => {
     setIsLoading(true);
-    const loginResponse = await fetch("http://192.168.43.171:3001/auth/login", {
+    const loginResponse = await fetch("http://localhost:3001/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),

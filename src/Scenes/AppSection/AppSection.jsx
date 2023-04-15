@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import Feed from "./Feed";
-import LeftPanel from "./LeftPanel";
-import RightPanel from "./RightPanel";
+import Feed from "./Feed/Feed";
+import LeftPanel from "./LeftPanel/LeftPanel";
+import RightPanel from "./RightPanel/RightPanel";
 export default function AppSection() {
   return (
     <Box
