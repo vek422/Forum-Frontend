@@ -15,13 +15,13 @@ const Post = forwardRef(({ thread }, ref) => {
   return (
     <Box
       sx={{
-        borderRadius: 4,
+        borderRadius: 3,
         backgroundColor: theme.palette.background.alt,
         p: 4,
         display: "flex",
         flexDirection: "column",
         gap: 2,
-        boxShadow: "-3px 10px 66px -58px rgba(0,0,0,0.75)",
+        boxShadow: "-3px 10px 66px -58px rgba(0, 0, 0, 0.75)",
       }}
       ref={ref ? ref : null}
     >
@@ -37,6 +37,7 @@ const Post = forwardRef(({ thread }, ref) => {
         <Typography variant="h3">{thread.title}</Typography>
         <Typography>{thread.body}</Typography>
       </Box>
+
       <Divider />
       <Box
         sx={{

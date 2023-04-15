@@ -1,14 +1,9 @@
 import { Box } from "@mui/material";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
-import AddThread from "../Widgets/AddThread";
 import Post from "../../../Components/Post/Post";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { setFeedThreads } from "../../../states";
 export default function Feed() {
-  const dispatch = useDispatch();
-  const feedThreads = useSelector((state) => state.feedThreads);
   const LIMIT = 10;
   const { ref, inView } = useInView(true);
   const [state, setState] = useState({
@@ -27,23 +22,17 @@ export default function Feed() {
           currPage: res.data.nextPage,
           threads: state.threads.concat(res.data.threads),
         }));
-        dispatch(setFeedThreads({ threads: res.data.threads }));
       });
   };
-  var i = 0;
-  // This Will Run on Initial Mount
+
   useEffect(() => {
-    console.log("i => ", i++);
     fetchThreads();
   }, []);
-  //This Will Run When Last Element gets in View
   useEffect(() => {
-    console.log("i => ", i++);
     if (state.hasNextPage && inView) {
       fetchThreads();
     }
   }, [inView, state.hasNextPage]);
-  // console.log(feedThreads);
   return (
     <Box
       sx={{
@@ -62,7 +51,7 @@ export default function Feed() {
           return <Post thread={thread} key={i} ref={ref} />;
         return <Post thread={thread} key={i} />;
       })}
-      <Box sx={{ height: 10, width: "100%" }}></Box>
+      <Box sx={{ height: 100, width: "100%" }}></Box>
     </Box>
   );
 }

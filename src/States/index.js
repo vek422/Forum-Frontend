@@ -22,12 +22,12 @@ export const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
     },
-    setFeedThreads: (state, action) => {
-      state.feedThreads = state.feedThreads.concat(action.payload.threads);
+    refreshUser: (state, action) => {
+      console.log(action.payload.user);
+      state.user = { ...state.user, ...action.payload.user };
     },
   },
 });
 
-export const { setMode, setLogout, setLogin, setFeedThreads } =
-  authSlice.actions;
+export const { setMode, setLogout, setLogin, refreshUser } = authSlice.actions;
 export default authSlice.reducer;

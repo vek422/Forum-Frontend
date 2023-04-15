@@ -1,15 +1,35 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 import LoginPage from "./Scenes/LoginPage/LoginPage";
 import Home from "./Scenes/Home/Home";
+import { useEffect } from "react";
+import axios from "axios";
+import { refreshUser } from "./states/index.js";
 
 function App() {
   const mode = useSelector((state) => state.mode);
+  const dispatch = useDispatch();
+
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  const state = useSelector((state) => state);
+  useEffect(() => {
+    if (state.user) {
+      axios
+        .get(
+          `http://localhost:3001/auth/refreshUser?userId=${state.user._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${state.token}`,
+            },
+          },
+        )
+        .then((res) => dispatch(refreshUser({ user: res.data.user })));
+    }
+  }, []);
 
   return (
     <div className="app">
