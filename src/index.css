@@ -6,7 +6,7 @@ body,
   height: 100%;
   width: 100%;
   font-family: "Rubik", sans-serif;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 * {
@@ -14,6 +14,7 @@ body,
   scrollbar-track-color: rgb(46, 54, 69); /* Firefox 63 compatibility */
   scrollbar-color: rgb(210, 210, 210) rgb(46, 54, 69);
   scrollbar-width: none;
+  /* border: 1px solid red; */
 }
 *::-webkit-scrollbar {
   width: 0;

@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 
 export default function ProfileWidget() {
   const user = useSelector((state) => state.user);
-  console.log(user);
   const fullName = `${
     user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1)
   } ${user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1)}`;

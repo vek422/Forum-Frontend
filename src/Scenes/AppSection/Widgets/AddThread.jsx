@@ -2,7 +2,7 @@ import { Box, Button, TextField, useTheme } from "@mui/material";
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import AddThreadModel from "./AddThreadModel";
-export default function AddThread() {
+export default function AddThread({ setObserver }) {
   const [open, setOpen] = useState(false);
 
   const theme = useTheme();
@@ -16,7 +16,7 @@ export default function AddThread() {
       >
         Add Thread
       </Button>
-      <AddThreadModel setOpen={setOpen} open={open} />
+      <AddThreadModel setOpen={setOpen} open={open} setObserver={setObserver} />
     </Box>
   );
 }

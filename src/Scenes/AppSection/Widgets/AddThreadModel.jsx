@@ -15,7 +15,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import Dropzone from "react-dropzone";
 import { useState } from "react";
-export default function AddThreadModel({ open, setOpen }) {
+export default function AddThreadModel({ open, setOpen, setObserver }) {
   const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -43,7 +43,10 @@ export default function AddThreadModel({ open, setOpen }) {
         headers: { Authorization: `Bearer ${token}` },
       },
     );
-    console.log(createThreadResponse);
+    const status = createThreadResponse.status;
+    if (status == 304) {
+      setObserver((state) => state + 1);
+    }
     onSubmitProps.resetForm();
     setOpen(false);
   };

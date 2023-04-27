@@ -3,14 +3,16 @@ import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 import Post from "../../../Components/Post/Post";
 import axios from "axios";
-export default function Feed() {
+export default function Feed({ observer, setObserver }) {
   const LIMIT = 10;
-  const { ref, inView } = useInView(true);
+  const { ref, inView } = useInView();
   const [state, setState] = useState({
     hasNextPage: true,
     currPage: 1,
     threads: [],
   });
+  console.log(inView, state.hasNextPage);
+
   const fetchThreads = async () => {
     axios
       .get(
@@ -51,7 +53,7 @@ export default function Feed() {
           return <Post thread={thread} key={i} ref={ref} />;
         return <Post thread={thread} key={i} />;
       })}
-      <Box sx={{ height: 100, width: "100%" }}></Box>
+      {/* <Box sx={{ height: 100, width: "100%" }}></Box> */}
     </Box>
   );
 }

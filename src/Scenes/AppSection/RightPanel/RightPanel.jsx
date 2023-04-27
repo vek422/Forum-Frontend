@@ -1,7 +1,9 @@
 import { Box } from "@mui/material";
 import AddThread from "../Widgets/AddThread";
 import ProfileWidget from "../../../Components/Post/ProfileWidget";
-export default function SidePanel() {
+import { useLocation } from "react-router-dom";
+export default function SidePanel({ setObserver }) {
+  const location = useLocation();
   return (
     <Box
       sx={{
@@ -13,7 +15,7 @@ export default function SidePanel() {
         gap: 4,
       }}
     >
-      <AddThread />
+      <AddThread setObserver={setObserver} />
       <ProfileWidget />
     </Box>
   );

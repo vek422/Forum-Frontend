@@ -15,8 +15,12 @@ import {
   BookmarksTwoTone,
 } from "@mui/icons-material";
 import { ChatBubbleOutlineOutlined } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 export default function SidePanel() {
+  const user = useSelector((state) => state.user);
   const theme = useTheme();
+  const navigate = useNavigate();
   const colors = [
     theme.palette.Maroon,
     theme.palette.Peach,
@@ -44,6 +48,7 @@ export default function SidePanel() {
                 borderRadius: 3,
                 backgroundColor: theme.palette.background.alt,
               }}
+              onClick={() => navigate("/home")}
             >
               <ListItemIcon>
                 <HomeTwoTone
@@ -70,6 +75,7 @@ export default function SidePanel() {
                 borderRadius: 3,
                 backgroundColor: theme.palette.background.alt,
               }}
+              onClick={() => navigate(`/user/${user._id}`)}
             >
               <ListItemIcon>
                 <ChatTwoTone
@@ -89,6 +95,7 @@ export default function SidePanel() {
                 borderRadius: 3,
                 backgroundColor: theme.palette.background.alt,
               }}
+              onClick={() => navigate("/saved")}
             >
               <ListItemIcon>
                 <BookmarksTwoTone
@@ -106,9 +113,7 @@ export default function SidePanel() {
 
         <Typography
           sx={{ textAlign: "center", fontSize: "1.3rem", fontWeight: 600 }}
-        >
-          Groups
-        </Typography>
+        ></Typography>
       </Box>
     </Box>
   );

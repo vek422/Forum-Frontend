@@ -23,7 +23,6 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
     },
     refreshUser: (state, action) => {
-      console.log(action.payload.user);
       state.user = { ...state.user, ...action.payload.user };
     },
   },

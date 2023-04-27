@@ -9,11 +9,14 @@ import Home from "./Scenes/Home/Home";
 import { useEffect } from "react";
 import axios from "axios";
 import { refreshUser } from "./states/index.js";
+import Navbar from "./Scenes/Navbar/Navbar";
+import Thread from "./Scenes/Thread/Thread";
+import Profile from "./Scenes/ProfilePage/Profile";
+import SavedThread from "./Scenes/SavedThreads/SavedThreads";
 
 function App() {
   const mode = useSelector((state) => state.mode);
   const dispatch = useDispatch();
-
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const state = useSelector((state) => state);
   useEffect(() => {
@@ -30,15 +33,19 @@ function App() {
         .then((res) => dispatch(refreshUser({ user: res.data.user })));
     }
   }, []);
-
   return (
-    <div className="app">
+    <div className="app" style={{ overflow: state.user ? "auto" : "auto" }}>
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          {state.user && <Navbar />}
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/thread/:id" element={<Thread />} />
+            <Route path="/user/:id" element={<Profile />} />
+            <Route path="/saved" element={<SavedThread />} />
+            <Route path="*" element={<Home />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

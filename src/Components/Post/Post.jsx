@@ -7,11 +7,13 @@ import {
   Button,
 } from "@mui/material";
 import { forwardRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ModeCommentRounded } from "@mui/icons-material";
-const Post = forwardRef(({ thread }, ref) => {
+import { Link } from "react-router-dom";
+const Post = forwardRef(({ thread }, ref = null) => {
   const theme = useTheme();
-  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -23,7 +25,7 @@ const Post = forwardRef(({ thread }, ref) => {
         gap: 2,
         boxShadow: "-3px 10px 66px -58px rgba(0, 0, 0, 0.75)",
       }}
-      ref={ref ? ref : null}
+      ref={ref}
     >
       {/* TITLE */}
       <Box
@@ -32,10 +34,17 @@ const Post = forwardRef(({ thread }, ref) => {
           flexDirection: "column",
           gap: 2,
           justifyContent: "space-around",
+          cursor: "pointer",
         }}
+        onClick={() => navigate(`/thread/${thread._id}`)}
       >
         <Typography variant="h3">{thread.title}</Typography>
-        <Typography>{thread.body}</Typography>
+        {thread.picturePath === "undefined" ? null : (
+          <img
+            src={`http://localhost:3001/assets/${thread.picturePath}`}
+            style={{ height: "20rem", objectFit: "cover" }}
+          />
+        )}
       </Box>
 
       <Divider />
@@ -49,7 +58,7 @@ const Post = forwardRef(({ thread }, ref) => {
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <Avatar
-            src={`http://localhost:3001/assets/${thread.userPicturePath}`}
+            src={`http://localhost:3001/assets/${thread.user.picturePath}`}
           />
           <Box sx={{ display: "flex", gap: 1 }}>
             <Typography sx={{ color: theme.palette.neutral.main }}>
@@ -61,16 +70,22 @@ const Post = forwardRef(({ thread }, ref) => {
                 "&hover": {},
                 cursor: "pointer",
               }}
+              onClick={() => {
+                navigate(`/user/${thread.user._id}`);
+              }}
             >
-              {thread.firstName} {thread.lastName}
+              {thread.user.firstName} {thread.user.lastName}
             </Typography>
           </Box>
         </Box>
         <Box sx={{}}>
-          <Button startIcon={<ModeCommentRounded />}>50+</Button>
+          <Button startIcon={<ModeCommentRounded />}>
+            {thread.comments.length}
+          </Button>
         </Box>
       </Box>
     </Box>
+    // </Link>
   );
 });
 export default Post;
