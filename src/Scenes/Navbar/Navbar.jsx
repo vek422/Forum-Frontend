@@ -4,6 +4,8 @@ import {
   useTheme,
   IconButton,
   useMediaQuery,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import { DarkMode, LightMode } from "@mui/icons-material";
 import { MenuOutlined } from "@mui/icons-material";
@@ -11,6 +13,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setMode } from "../../states";
 import ProfileIcon from "./ProfileIcon";
+import Search from "./Search";
 function Navbar() {
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -18,6 +21,7 @@ function Navbar() {
   const user = useSelector((state) => state.user);
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width:600px)");
+  const handleSearch = () => {};
   return (
     <>
       <Box
@@ -44,7 +48,16 @@ function Navbar() {
         >
           Forum
         </Typography>
-        <Box sx={{ display: "flex", flexDirection: "row", gap: "2vw" }}>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            gap: "2vw",
+            alignItems: "center",
+          }}
+        >
+          <Search />
           <IconButton onClick={() => dispatch(setMode())}>
             {mode === "light" ? (
               <LightMode sx={{ fontSize: "1.5rem" }} />

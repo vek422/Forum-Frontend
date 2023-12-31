@@ -6,23 +6,29 @@ import {
   useTheme,
 } from "@mui/material";
 import LeftPanel from "../AppSection/LeftPanel/LeftPanel";
-import { useSelector } from "react-redux";
-import ProfileContent from "./ProfileContent";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-export default function Profile() {
+import { useSelector } from "react-redux";
+import Post from "../../Components/Post/Post";
+import AddThreadSubForum from "../AppSection/Widgets/AddThreadSubForum";
+export default function Subforum() {
   const { id } = useParams();
+  const user = useSelector((state) => state.user);
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [subForum, setsubForum] = useState();
   const theme = useTheme();
+  const showAddThread = subForum?.createdBy?._id == user._id;
+  console.log(subForum);
   useEffect(() => {
-    axios.get(`http://localhost:3001/u/${id}`).then((res) => {
-      setUser(res.data);
+    setIsLoading(true);
+    setsubForum(null);
+    axios.get(`http://localhost:3001/subforum/${id}`).then((res) => {
+      setsubForum(res.data.subForum);
       setIsLoading(false);
     });
-  }, []);
-  return user ? (
+  }, [id]);
+  return subForum ? (
     <Box
       sx={{
         height: "100%",
@@ -35,8 +41,7 @@ export default function Profile() {
         sx={{
           gridColumn: "span 8",
           overflowY: "scroll",
-          backgroundColor: theme.palette.Crust,
-          // opacity: 0.9,
+          backgroundColor: theme.palette.Mantle,
         }}
       >
         {/* Banner */}
@@ -44,6 +49,8 @@ export default function Profile() {
           sx={{
             width: "100%",
             height: "10rem",
+            display: "flex",
+            justifyContent: "space-between",
             backgroundColor: theme.palette.Teal,
             borderRadius: 2,
           }}
@@ -57,7 +64,7 @@ export default function Profile() {
             }}
           >
             <img
-              src={`http://localhost:3001/assets/${user.picturePath}`}
+              src={`http://localhost:3001/assets/${subForum.picturePath}`}
               style={{
                 outline: `6px solid ${theme.palette.background.default}`,
                 width: "10rem",
@@ -67,6 +74,11 @@ export default function Profile() {
               }}
             />
           </Box>
+          {showAddThread && (
+            <Box sx={{ position: "relative", bottom: "-110%", right: "5%" }}>
+              <AddThreadSubForum subForumId={id} />
+            </Box>
+          )}
         </Box>
         {/* Banner End */}
 
@@ -81,7 +93,7 @@ export default function Profile() {
           }}
         >
           <Typography sx={{ fontWeight: 500, fontSize: "2rem" }}>
-            {user.firstName} {user.lastName}
+            {subForum.name}
           </Typography>
           <Box
             sx={{
@@ -93,19 +105,33 @@ export default function Profile() {
               mb: 5,
             }}
           >
-            <Typography sx={{ fontSize: "1rem" }}>{user.department}</Typography>
-            <Typography sx={{ fontSize: "1rem" }}>{user.year}</Typography>
+            <Typography sx={{ fontSize: "1rem", gridColumn: "span 2" }}>
+              {subForum.description}
+            </Typography>
             <Typography sx={{ fontWeight: "700", fontSize: "1rem" }}>
-              {user.followers.length}{" "}
+              {subForum.followers.length}{" "}
               <span style={{ fontWeight: "500" }}>Followers</span>
             </Typography>
             <Typography sx={{ fontSize: "1rem", fontWeight: "500" }}>
-              {user.threads.length} Threads
+              {subForum.threads.length} Threads
             </Typography>
           </Box>
         </Box>
-        {/* <Divider /> */}
-        <ProfileContent user={user} />
+        <Divider />
+        <Box sx={{ p: 2 }}>
+          {/* <Typography sx={{ fontSize: "1.2rem", fontWeight: 500 }}>
+            Threads
+          </Typography> */}
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+            {subForum.threads.length == 0 ? (
+              <h1>No Threads</h1>
+            ) : (
+              subForum.threads.map((thread) => (
+                <Post thread={thread} key={thread._id} />
+              ))
+            )}
+          </Box>
+        </Box>
         <Box sx={{ width: "100%", hieght: 5, p: 5 }}></Box>
       </Box>
     </Box>

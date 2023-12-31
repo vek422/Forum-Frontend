@@ -6,28 +6,35 @@ import {
   useTheme,
   Button,
 } from "@mui/material";
+import { gsap } from "gsap";
 import { forwardRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { ModeCommentRounded } from "@mui/icons-material";
-import { Link } from "react-router-dom";
-const Post = forwardRef(({ thread }, ref = null) => {
+const scale = ({ currentTarget }) => {
+  gsap.to(currentTarget, { scale: 1.01, duration: 0.1, ease: "easeInOut" });
+};
+const descale = ({ currentTarget }) => {
+  gsap.to(currentTarget, { scale: 1, duration: 0.1, ease: "easeInOut" });
+};
+const Post = forwardRef(({ thread }, ref) => {
   const theme = useTheme();
+
   const navigate = useNavigate();
   return (
     <Box
       sx={{
         borderRadius: 3,
         backgroundColor: theme.palette.background.alt,
-        p: 4,
+        p: 2,
         display: "flex",
         flexDirection: "column",
-        gap: 2,
-        boxShadow: "-3px 10px 66px -58px rgba(0, 0, 0, 0.75)",
+        gap: 1,
+        boxShadow: `4px 4px 37px -30px  ${theme.palette.neutral.medium}`,
       }}
+      onMouseEnter={scale}
+      onMouseLeave={descale}
       ref={ref}
     >
-      {/* TITLE */}
       <Box
         sx={{
           display: "flex",
@@ -36,10 +43,22 @@ const Post = forwardRef(({ thread }, ref = null) => {
           justifyContent: "space-around",
           cursor: "pointer",
         }}
-        onClick={() => navigate(`/thread/${thread._id}`)}
+        onClick={() => {
+          navigate(`/thread/${thread._id}`);
+        }}
       >
-        <Typography variant="h3">{thread.title}</Typography>
-        {thread.picturePath === "undefined" ? null : (
+        <Typography
+          sx={{
+            fontWeight: 700,
+            fontSize: "1.5rem",
+            color: theme.palette.mode === "dark" ? "white" : "black",
+          }}
+        >
+          {thread.title}
+        </Typography>
+        {thread.picturePath === "undefined" || thread.picturePath === "" ? (
+          <Typography>{thread.body}</Typography>
+        ) : (
           <img
             src={`http://localhost:3001/assets/${thread.picturePath}`}
             style={{ height: "20rem", objectFit: "cover" }}
@@ -47,7 +66,7 @@ const Post = forwardRef(({ thread }, ref = null) => {
         )}
       </Box>
 
-      <Divider />
+      <Divider sx={{ borderColor: theme.palette.Rosewater }} />
       <Box
         sx={{
           display: "flex",
@@ -57,9 +76,15 @@ const Post = forwardRef(({ thread }, ref = null) => {
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          <Avatar
-            src={`http://localhost:3001/assets/${thread.user.picturePath}`}
-          />
+          {thread.user ? (
+            <Avatar
+              src={`http://localhost:3001/assets/${thread.user.picturePath}`}
+            />
+          ) : (
+            <Avatar
+              src={`http://localhost:3001/assets/${thread.subForum.picturePath}`}
+            />
+          )}
           <Box sx={{ display: "flex", gap: 1 }}>
             <Typography sx={{ color: theme.palette.neutral.main }}>
               Posted by
@@ -71,10 +96,14 @@ const Post = forwardRef(({ thread }, ref = null) => {
                 cursor: "pointer",
               }}
               onClick={() => {
-                navigate(`/user/${thread.user._id}`);
+                thread.user
+                  ? navigate(`/user/${thread.user._id}`)
+                  : navigate(`/subforum/${thread.subForum._id}`);
               }}
             >
-              {thread.user.firstName} {thread.user.lastName}
+              {thread.user
+                ? `${thread.user.firstName} ${thread.user.lastName}`
+                : `${thread.subForum.name}`}
             </Typography>
           </Box>
         </Box>

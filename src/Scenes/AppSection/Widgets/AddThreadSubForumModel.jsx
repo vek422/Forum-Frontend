@@ -17,7 +17,7 @@ import * as yup from "yup";
 import Dropzone from "react-dropzone";
 import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
-export default function AddThreadModel({ open, setOpen, setObserver }) {
+export default function AddThreadSubForumModel({ open, setOpen, subForumId }) {
   const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -30,11 +30,10 @@ export default function AddThreadModel({ open, setOpen, setObserver }) {
     for (let value in values) {
       formData.append(value, values[value]);
     }
-    formData.append("userId", user._id);
+    formData.append("subForumId", subForumId);
     formData.append("picturePath", values.picture.name);
-
     const createThreadResponse = await fetch(
-      "http://localhost:3001/thread/postThread",
+      "http://localhost:3001/subforum/postThread",
       {
         method: "POST",
         body: formData,
@@ -51,7 +50,7 @@ export default function AddThreadModel({ open, setOpen, setObserver }) {
     onSubmitProps.resetForm();
   };
   const handleFormSubmit = async (values, onSubmitProps) => {
-    setStatus("LOADING");
+    // setStatus("LOADING");
     await post(values, onSubmitProps);
     setTimeout(1000, () => console.log("hello"));
   };

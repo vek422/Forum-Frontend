@@ -18,7 +18,7 @@ export default function ProfileWidget() {
         alignItems: "center",
         gap: 4,
         py: 2,
-        boxShadow: "-3px 10px 66px -58px rgba(0,0,0,0.75)",
+        boxShadow: `-3px 10px 66px -58px ${theme.palette.Text}`,
       }}
     >
       <img
@@ -28,7 +28,7 @@ export default function ProfileWidget() {
           height: "96px",
           objectFit: "cover",
           borderRadius: "50%",
-          boxShadow: "10px 37px 56px -32px rgba(0,0,0,0.75)",
+          boxShadow: `10px 10px 28px -20px  ${theme.palette.Text}`,
         }}
       />
       <Typography variant="h4">{fullName}</Typography>

@@ -11,11 +11,5 @@ export default function Home() {
       navigate("/");
     }
   }, [user]);
-  return (
-    user && (
-      <>
-        <AppSection />
-      </>
-    )
-  );
+  return user && <AppSection />;
 }

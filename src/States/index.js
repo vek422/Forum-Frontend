@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   mode: "light",
+  searchModal: false,
   user: null,
   token: null,
   feedThreads: [],
@@ -25,8 +26,12 @@ export const authSlice = createSlice({
     refreshUser: (state, action) => {
       state.user = { ...state.user, ...action.payload.user };
     },
+    setSearchModal: (state) => {
+      state.searchModal = !state.searchModal;
+    },
   },
 });
 
-export const { setMode, setLogout, setLogin, refreshUser } = authSlice.actions;
+export const { setMode, setLogout, setLogin, refreshUser, setSearchModal } =
+  authSlice.actions;
 export default authSlice.reducer;

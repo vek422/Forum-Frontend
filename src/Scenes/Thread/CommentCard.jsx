@@ -1,4 +1,11 @@
-import { Avatar, Box, IconButton, Typography, useTheme } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Divider,
+  IconButton,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import ThumbUpAltTwoToneIcon from "@mui/icons-material/ThumbUpAltTwoTone";
 import { ModeCommentTwoTone } from "@mui/icons-material";
 import { forwardRef } from "react";
@@ -9,24 +16,9 @@ import { useNavigate } from "react-router-dom";
 const customComment = forwardRef(function customComment(props, ref) {
   const navigate = useNavigate();
   const theme = useTheme();
-  const {
-    className,
-    classes,
-    label,
-    nodeId,
-    icon: iconProp,
-    expansionIcon,
-    displayIcon,
-  } = props;
-  const {
-    disabled,
-    expanded,
-    selected,
-    focused,
-    handleExpansion,
-    handleSelection,
-    preventSelection,
-  } = useTreeItem(nodeId);
+  const { label, nodeId } = props;
+  const { handleExpansion, handleSelection, preventSelection } =
+    useTreeItem(nodeId);
   const dontExpand = (event) => {
     preventSelection(event);
   };
@@ -39,14 +31,15 @@ const customComment = forwardRef(function customComment(props, ref) {
       ref={ref}
       onClick={dontExpand}
       sx={{
-        backgroundColor: theme.palette.background.alt,
+        backgroundColor: theme.palette.Base,
+        border: `1px solid ${theme.palette.Rosewater}`,
         p: 1,
         px: 2,
         my: 2,
         borderRadius: 2,
         display: "flex",
         flexDirection: "column",
-        gap: 2,
+        gap: 1,
       }}
     >
       <Box
@@ -54,6 +47,7 @@ const customComment = forwardRef(function customComment(props, ref) {
           display: "flex",
           alignItems: "center",
           gap: 2,
+          // borderBottom: `1px solid red`,
         }}
       >
         <Avatar
@@ -66,6 +60,7 @@ const customComment = forwardRef(function customComment(props, ref) {
           {label.user.firstName} {label.user.lastName}
         </Typography>
       </Box>
+      <Divider />
       <Box>
         <Typography>{label.content}</Typography>
       </Box>

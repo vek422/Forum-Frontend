@@ -1,19 +1,20 @@
-import { Box } from "@mui/material";
+import { Box, Divider, LinearProgress, useTheme } from "@mui/material";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 import Post from "../../../Components/Post/Post";
 import axios from "axios";
 export default function Feed({ observer, setObserver }) {
   const LIMIT = 10;
+  const theme = useTheme();
   const { ref, inView } = useInView();
+  const [isLoading, setIsLoading] = useState(false);
   const [state, setState] = useState({
     hasNextPage: true,
     currPage: 1,
     threads: [],
   });
-  console.log(inView, state.hasNextPage);
-
   const fetchThreads = async () => {
+    setIsLoading(true);
     axios
       .get(
         `http://localhost:3001/thread/getThreads?page=${state.currPage}&limit=${LIMIT}`,
@@ -24,6 +25,7 @@ export default function Feed({ observer, setObserver }) {
           currPage: res.data.nextPage,
           threads: state.threads.concat(res.data.threads),
         }));
+        setIsLoading(false);
       });
   };
 
@@ -39,13 +41,14 @@ export default function Feed({ observer, setObserver }) {
     <Box
       sx={{
         gridColumn: "span 6",
-        p: 8,
-        pt: 2,
+        p: 3,
         display: "flex",
         flexDirection: "column",
-        gap: 5,
+        gap: 2,
         overflowY: "scroll",
         overflowClipMargin: "10px",
+        borderLeft: `1px solid ${theme.palette.neutral.main}`,
+        borderRight: `1px solid ${theme.palette.neutral.main}`,
       }}
     >
       {state.threads.map((thread, i) => {
@@ -53,7 +56,10 @@ export default function Feed({ observer, setObserver }) {
           return <Post thread={thread} key={i} ref={ref} />;
         return <Post thread={thread} key={i} />;
       })}
-      {/* <Box sx={{ height: 100, width: "100%" }}></Box> */}
+      <Box sx={{ width: "100%" }}>
+        {isLoading && <LinearProgress color="secondary" />}
+      </Box>
+      <Box sx={{ height: "5rem", width: "100%", p: 2 }}></Box>
     </Box>
   );
 }

@@ -80,7 +80,15 @@ export default function Signup(props) {
     year: yup.string().required("required"),
   });
   return (
-    <>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        backdropFilter: "blur(2px)",
+        p: 2,
+      }}
+    >
       <Box>
         <Typography sx={{ fontWeight: 700, fontSize: "2rem" }}>
           Welcome To Forum
@@ -271,6 +279,6 @@ export default function Signup(props) {
         Already Have An Account? SignIn Here
       </Typography>
       <Box sx={{ height: "5rem" }}></Box>
-    </>
+    </Box>
   );
 }

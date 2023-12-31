@@ -110,7 +110,7 @@ export const themeSettings = (mode) => {
             },
             background: {
               default: mocha.Crust,
-              alt: mocha.Mantle,
+              alt: mocha.Base,
             },
             text: {
               primary: mocha.Text,
@@ -138,9 +138,13 @@ export const themeSettings = (mode) => {
             },
             background: {
               default: Latte.Crust,
-              alt: Latte.Mantle,
+              alt: Latte.Base,
             },
           }),
+    },
+    boxShadow: {
+      main: "0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px",
+      alt: "rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px",
     },
     typography: {
       fontFamily: ["Rubik", "sans-serif"].join(","),

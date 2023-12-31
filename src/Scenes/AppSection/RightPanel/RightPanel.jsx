@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import AddThread from "../Widgets/AddThread";
 import ProfileWidget from "../../../Components/Post/ProfileWidget";
 import { useLocation } from "react-router-dom";
-export default function SidePanel({ setObserver }) {
+export default function SidePanel() {
   const location = useLocation();
   return (
     <Box
@@ -11,11 +11,11 @@ export default function SidePanel({ setObserver }) {
         display: { xs: "none", sm: "flex" },
         flexDirection: "column",
         alignItems: "center",
-        py: 2,
+        p: 2,
         gap: 4,
       }}
     >
-      <AddThread setObserver={setObserver} />
+      <AddThread />
       <ProfileWidget />
     </Box>
   );

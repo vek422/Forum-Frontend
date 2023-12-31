@@ -75,7 +75,15 @@ export function Login(props) {
         setFieldValue,
         resetForm,
       }) => (
-        <>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            backdropFilter: "blur(2px)",
+            p: 2,
+          }}
+        >
           <Box>
             <Typography sx={{ fontWeight: 700, fontSize: "2rem" }}>
               Welcome Back
@@ -85,7 +93,7 @@ export function Login(props) {
             </Typography>
           </Box>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} autoComplete="off">
             <Box display={"flex"} flexDirection="column" gap={"1rem"}>
               <TextField
                 label="Email"
@@ -94,13 +102,16 @@ export function Login(props) {
                   handleChange(e);
                   setError(null);
                 }}
+                autoComplete="false"
                 value={values.email}
                 name="email"
                 error={Boolean(touched.email) && Boolean(errors.email)}
                 helperText={touched.email && errors.email}
+                type="email"
               />
               <TextField
                 label="password"
+                inputProps={{ autoComplete: "off" }}
                 type="password"
                 name="password"
                 onBlur={handleBlur}
@@ -141,7 +152,7 @@ export function Login(props) {
           >
             Dont Have An Account? Sign Up Here
           </Typography>
-        </>
+        </Box>
       )}
     </Formik>
   );
